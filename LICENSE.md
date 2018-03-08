@@ -2,7 +2,7 @@
 
 **Copyright (c) 2018**
 
-* Francis Avancena
+* Francis Avanceña
 * Justine Abigail Tan
 * Jiggy Villanueva 
 * Kimberly Danielle Uy
