@@ -1,4 +1,4 @@
-# Influenseer: A P&G Moonshot Application
+# Influenseer
 
 ## Team
 
@@ -46,4 +46,4 @@ $ npm -v
 
 ## License
 
-This software is under the MIT License please see [LICENSE.md](https://github.com/tripeersyou/influenseer/blob/master/LICENSE.) for more details.
+This software is under the MIT License please see [LICENSE.md](https://github.com/tripeersyou/influenseer/blob/master/LICENSE.md) for more details.

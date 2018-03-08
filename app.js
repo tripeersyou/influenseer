@@ -20,6 +20,10 @@ app.set('view engine', 'ejs');
 // Routes
 app.use('/', views);
 
+app.get('*',(req, res) => {
+    res.render('404');
+});
+
 app.listen(port, () => {
     console.log(`Application is listening at port ${port}: http://localhost:${port}`);
 });
