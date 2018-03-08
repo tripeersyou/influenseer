@@ -22,6 +22,7 @@
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "mongojs": "^2.4.1",
+    "socket.io": "^2.0.4",
     "twit": "^2.2.9"
   },
   "devDependencies": {

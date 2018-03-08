@@ -1,3 +1,13 @@
 <%- include layouts/header %>
     <h1>Influenseer</h1>
+    <ul id="tweets">
+    </ul>
+    <script src="/js/lib/socket.io.js"></script>
+    <script>
+    var socket = io.connect('/');
+    tweets = document.getElementById('tweets');
+    socket.on('tweet', function (data) {
+        tweets.innerHTML = tweets.innerHTML + '<li>' + data + '</li>';
+    });
+    </script>
 <%- include layouts/footer %>
