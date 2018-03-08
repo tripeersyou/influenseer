@@ -1,0 +1,30 @@
+{
+  "name": "influenseer",
+  "version": "1.0.0",
+  "description": "P&G Moonshot 2018 app",
+  "main": "app.js",
+  "repository": "http://github.com/tripeersyou/influenseer",
+  "scripts": {
+    "start": "node app",
+    "test": "echo \"Error: no test specified.\""
+  },
+  "authors": [
+    "Francis Avanceña",
+    "Brennan Matriano",
+    "Justine Abigail Tan",
+    "Jiggy Villanueva",
+    "Kimberly Danielle Uy"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "dotenv": "^4.0.0",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "mongojs": "^2.4.1",
+    "twit": "^2.2.9"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.1"
+  }
+}
