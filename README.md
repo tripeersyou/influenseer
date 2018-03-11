@@ -35,12 +35,22 @@ $ npm -v
 ```
 1. npm install
 2. cp .env.dist .env
-3. cp. twitter_config.js.dist twitter_config.js
 ```
 
 * Edit the twitter_config.js and the .env files to your variables
 
 * Run `npm start`.
+
+### Optional: Nodemon
+
+* Install `nodemon` to avoid restarting the server over and over
+
+```
+npm install -g nodemon
+```
+* Run `nodemon` in the terminal
+
+
 
 ---
 

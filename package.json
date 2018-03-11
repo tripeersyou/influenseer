@@ -1,7 +1,7 @@
 {
   "name": "influenseer",
   "version": "1.0.0",
-  "description": "P&G Moonshot 2018 app",
+  "description": "An app using the Twitter and Instagram APIs",
   "main": "app.js",
   "repository": "http://github.com/tripeersyou/influenseer",
   "scripts": {
@@ -21,6 +21,7 @@
     "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
+    "instagram-node": "^0.5.8",
     "mongojs": "^2.4.1",
     "socket.io": "^2.0.4",
     "twit": "^2.2.9"

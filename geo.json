@@ -1,0 +1,39 @@
+{
+    "result": {
+        "places": [{
+            "id": "fb151ef38fa2ac0d",
+            "url": "https://api.twitter.com/1.1/geo/id/fb151ef38fa2ac0d.json",
+            "place_type": "country",
+            "name": "Republika ng Pilipinas",
+            "full_name": "Republika ng Pilipinas",
+            "country_code": "PH",
+            "country": "Republika ng Pilipinas",
+            "contained_within": [],
+            "centroid": [123.3234119683899, 12.051336899999999],
+            "bounding_box": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [116.8748754, 4.4073918],
+                        [116.8748754, 21.1879257],
+                        [126.7814024, 21.1879257],
+                        [126.7814024, 4.4073918],
+                        [116.8748754, 4.4073918]
+                    ]
+                ]
+            },
+            "attributes": {}
+        }]
+    },
+    "query": {
+        "url": "https://api.twitter.com/1.1/geo/search.json?query=Philippines",
+        "type": "search",
+        "params": {
+            "accuracy": 0,
+            "granularity": "neighborhood",
+            "query": "Philippines",
+            "autocomplete": false,
+            "trim_place": false
+        }
+    }
+}
