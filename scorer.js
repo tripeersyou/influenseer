@@ -70,7 +70,8 @@ class Scorer {
 	}
 
 	train() {
-		let trainingSet = [{
+		let trainingSet = [
+			{
 				input: [1, 1, 0, 1],
 				output: [1]
 			},

@@ -32,10 +32,11 @@ const db = mongojs(process.env.db_uri, ['tweets']);
 const port = process.env.PORT || 8000;
 const fs = require('fs');
 
-// ig.user_search('tripeersyou', function(err, users, remaining, limit) {
-//     if (err) {throw err; }
-//     console.log(users);
-// });
+ig.user_media_recent('6365383', function(err, medias, pagination, remaining, limit) {
+    let data = JSON.stringify(medias);
+    fs.writeFile('ig.json', data);
+    console.log(medias)
+});
 
 // Middleware
 app.use(bodyParser.urlencoded({
@@ -62,14 +63,10 @@ io.on('connection', function (socket) {
 
 const stream = T.stream('statuses/sample');
 stream.on('tweet', tweet => {
-    console.log(tweet.text);    
-    if (tweet.lang == 'en' || tweet.lang == 'tl') {
+    // console.log(tweet.text);
+    if ((tweet.lang == 'en' && tweet.user.location == 'Republic of the Philippines ') || tweet.lang == 'tl') {
         if (tweet.user.followers_count > 1000 && tweet.user.followers_count < 10000) {
-            T.get('statuses/user_timeline', {
-                screen_name: tweet.user.screen_name,
-                count: 200,
-                include_rts: false
-            }, (err, tweets) => {
+            T.get('statuses/user_timeline', {screen_name: tweet.user.screen_name,count: 200,include_rts: false}, (err, tweets) => {
                 io.emit('tweet', tweets);
             });
         }
