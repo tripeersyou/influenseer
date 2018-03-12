@@ -8,7 +8,6 @@
 * Jiggy Villanueva
 * Kimberly Danielle Uy
 
----
 
 ## Dependecies
 
@@ -25,8 +24,6 @@ $ node -v
 $ npm -v
 => 5.7.1
 ```
-
----
 
 ## Setting up the development envrionment
 
@@ -50,9 +47,6 @@ npm install -g nodemon
 ```
 * Run `nodemon` in the terminal
 
-
-
----
 
 ## License
 
