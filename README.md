@@ -34,7 +34,7 @@ $ npm -v
 2. cp .env.dist .env
 ```
 
-* Edit the twitter_config.js and the .env files to your variables
+* Edit the .env file to your variables/API keys
 
 * Run `npm start`.
 

@@ -43,7 +43,7 @@ class Scorer {
 		// Intialization
 		try {
 			this.load_data(
-				JSON.parse(fs.readFileSync('nn_settings.json'))
+				JSON.parse(fs.readFileSync('./settings.json'))
 			);
 		} catch (err) {
 			console.log('No settings found. Training weights ...');
@@ -57,13 +57,13 @@ class Scorer {
 	}
 
 	on_write_success() {
-		console.log('Wrote settings to - nn_settings.json');
+		console.log('settings.json');
 	}
 
 	save() {
 		try {
 			let out = JSON.stringify(this.network.toJSON());
-			fs.writeFile('nn_settings.json', out, this.on_write_success);
+			fs.writeFile('settings.json', out, this.on_write_success);
 		} catch (err) {
 			console.log('Cannot write file. Do you have the necessary permissions set?');
 		}

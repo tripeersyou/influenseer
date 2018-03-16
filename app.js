@@ -5,16 +5,8 @@ const Twit = require('twit');
 const config = require('./twitter_config');
 const T = new Twit(config);
 
-// Instagram API
-const ig = require('instagram-node').instagram();
-ig.use({
-    client_id: process.env.client_id,
-    client_secret: process.env.client_secret_id
-});
-ig.use({
-    access_token: process.env.ig_access_token
-});
-
+// Instagram Scraper
+const ig = require('instagram-scraper');
 
 // Nueral Network
 const Scorer = require('./scorer');
@@ -32,11 +24,7 @@ const db = mongojs(process.env.db_uri, ['tweets']);
 const port = process.env.PORT || 8000;
 const fs = require('fs');
 
-ig.user_media_recent('6365383', function(err, medias, pagination, remaining, limit) {
-    let data = JSON.stringify(medias);
-    fs.writeFile('ig.json', data);
-    console.log(medias)
-});
+
 
 // Middleware
 app.use(bodyParser.urlencoded({
@@ -54,16 +42,15 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-io.on('connection', function (socket) {
+io.on('connection', (socket) => {
     console.log('a user connected');
-    socket.on('disconnect', function () {
+    socket.on('disconnect', () => {
         console.log('user disconnected');
     });
 });
 
 const stream = T.stream('statuses/sample');
 stream.on('tweet', tweet => {
-    // console.log(tweet.text);
     if ((tweet.lang == 'en' && tweet.user.location == 'Republic of the Philippines ') || tweet.lang == 'tl') {
         if (tweet.user.followers_count > 1000 && tweet.user.followers_count < 10000) {
             T.get('statuses/user_timeline', {screen_name: tweet.user.screen_name,count: 200,include_rts: false}, (err, tweets) => {
@@ -71,6 +58,19 @@ stream.on('tweet', tweet => {
             });
         }
     }
+});
+
+app.get('/instagram/:handle', (req, res) => {
+	let user = req.params.handle;
+	ig.getUserData(user, (err, data) => {
+		res.render('ig/show', {data: data});
+	});
+});
+
+ig.getUserData('jiggyvillanueva', function(err, data) {
+    console.log(data);
+    let data = JSON.stringify(data);
+    fs.writeFile('user.json', data);
 });
 
 app.get('*', (req, res) => {
