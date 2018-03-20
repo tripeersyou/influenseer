@@ -5,7 +5,6 @@
 * Francis Avanceña
 * Justine Abigail Tan
 * Jiggy Villanueva 
-* Kimberly Danielle Uy
 * Brennan Matriano
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

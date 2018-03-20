@@ -6,7 +6,6 @@
 * Brennan Matriano
 * Justine Abigail Tan
 * Jiggy Villanueva
-* Kimberly Danielle Uy
 
 
 ## Dependecies

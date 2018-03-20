@@ -8,7 +8,7 @@ const T = new Twit(config);
 // Instagram Scraper
 const ig = require('instagram-scraper');
 
-// Nueral Network
+// Nueral Network and Natural Language Processor
 const Scorer = require('./scorer');
 const Network = new Scorer();
 
@@ -37,6 +37,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// ig.getUserData('jiggyvillanueva').then( data => {
+//     let user = JSON.stringify(data);
+//     console.log(user);
+//     fs.writeFile('data/user.json', user);
+// });
+
 // Routes
 app.get('/', (req, res) => {
     res.render('index');
@@ -53,6 +59,7 @@ const stream = T.stream('statuses/sample');
 stream.on('tweet', tweet => {
     if ((tweet.lang == 'en' && tweet.user.location == 'Republic of the Philippines ') || tweet.lang == 'tl') {
         if (tweet.user.followers_count > 1000 && tweet.user.followers_count < 10000) {
+            console.log(tweet.text);
             T.get('statuses/user_timeline', {screen_name: tweet.user.screen_name,count: 200,include_rts: false}, (err, tweets) => {
                 io.emit('tweet', tweets);
             });
@@ -67,11 +74,6 @@ app.get('/instagram/:handle', (req, res) => {
 	});
 });
 
-ig.getUserData('jiggyvillanueva', function(err, data) {
-    console.log(data);
-    let data = JSON.stringify(data);
-    fs.writeFile('user.json', data);
-});
 
 app.get('*', (req, res) => {
     res.render('404');
