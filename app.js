@@ -5,6 +5,7 @@ const Twit = require('twit');
 const config = require('./twitter_config');
 const T = new Twit(config);
 const stream = T.stream('statuses/sample');
+
 // Instagram Scraper
 const ig = require('instagram-scraper');
 
@@ -17,9 +18,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
+
 const server = require('http').Server(app)
 const io = require('socket.io')(server);
 const mongojs = require('mongojs');
+
 const db = mongojs(process.env.db_uri, ['tweets']);
 const port = process.env.PORT || 8000;
 const fs = require('fs');
@@ -37,6 +40,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+
+stream.stop();
 app.get('/', (req, res) => {
     res.render('index');
 });
@@ -51,7 +56,6 @@ io.on('connection', (socket) => {
 });
 
 stream.on('tweet', tweet => {
-    console.log(tweet.text);    
     if ((tweet.lang == 'en' && tweet.user.location == 'Republic of the Philippines ') || tweet.lang == 'tl') {
         if (tweet.user.followers_count > 1000 && tweet.user.followers_count < 10000) {
             T.get('statuses/user_timeline', {screen_name: tweet.user.screen_name,count: 200,include_rts: false}, (err, tweets) => {
@@ -63,7 +67,8 @@ stream.on('tweet', tweet => {
 
 app.get('/instagram/:handle', (req, res) => {
 	let user = req.params.handle;
-	ig.getUserData(user).then( data => {
+	ig.getUserData(user).then(data => {
+        console.log(data);
 		res.render('ig_show', {data: data});
 	});
 });

@@ -1,4 +1,6 @@
 <%- include layouts/header %>
+<img src="<%- data.graphql.user.profile_pic_url %>" alt="">
+<br>
 <%- data.graphql.user.full_name %>
 <br>
 <%- data.graphql.user.username %>
@@ -6,7 +8,7 @@
 <% for(let image of data.graphql.user.edge_owner_to_timeline_media.edges) { %>
     <div class="column is-one-third">
         <a href="https://instagram.com/p/<%-image.node.shortcode%>" target="_blank">
-            <img src="<%-image.node.display_url%>" alt="" srcset="">
+            <img src="<%-image.node.display_url%>" />
         </a>
         <% for(let text of  image.node.edge_media_to_caption.edges) { %>
             <small><%-text.node.text%></small>
