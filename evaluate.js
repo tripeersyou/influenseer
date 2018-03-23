@@ -53,9 +53,7 @@ class evaluater{
 				id: historical_tweets[i].id_str
 			},(err,response) => {
 				sentiment_grade = 0;
-				console.log(response);
 				for (let j = response.length - 1; j >= 0; j--) {
-					console.log(response[j].text);
 					aggregate_sentiment_grade += speakeasy.classify(response[j].full_text);
 				}
 			});
@@ -137,3 +135,5 @@ var fs = require('fs')
 data = JSON.parse(fs.readFileSync('data/twitter.json'));
 eva = new evaluater();
 console.log(eva.evaluate(data));
+data_2 = JSON.parse(fs.readFileSync('data/twitter_2.json'));
+console.log(eva.evaluate(data_2));
