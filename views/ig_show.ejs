@@ -1,11 +1,45 @@
 <%- include layouts/header %>
-<a href="/" class="button">Back</a>
-<br>
-<img src="<%- data.graphql.user.profile_pic_url %>" alt="">
-<br>
-<%- data.graphql.user.full_name %>
-<br>
-<%- data.graphql.user.username %>
+
+<a class="button is-primary" href='/' style="position: fixed; top: 80%; right:5%; height: 60px; width: 60px; border-radius:50%; z-index:999">
+	<i class="fa fa-angle-left is-medium"/>
+</a>
+
+<div class='columns'>
+	<div class='column'>
+		<img src="<%- data.graphql.user.profile_pic_url %>" alt="" style="border-radius:50%"/>
+	</div>
+	<div class='column' style="padding-top:30%; padding-bottom:70%; position:relative">
+		<div style="position:absolute; top:50%; right:50%">	
+			<span class='subtext'>Full Name</span>
+			<br/>
+			<span class='main_text'><%- data.graphql.user.full_name %></span>
+		</div>
+	</div>
+	<div class='column' style="padding-top:70%; padding-bottom:70%; position:relative">
+		<div style="position:absolute; top:50%; right:50%">	
+			<span class='subtext'>Username</span>
+			<br/>
+			<span class='main_text'><%- data.graphql.user.username %></span>
+		</div>
+	</div>
+	<div class='column' style="padding-top:70%; padding-bottom:70%; position:relative">
+		<div style="position:absolute; top:50%; right:50%">	
+			<span class='subtext'>Followers</span>
+			<br/>
+			<span class='main_text'><%- data.graphql.user.edge_followed_by.count %></span>
+		</div>
+	</div>
+	<div class='column' style="padding-top:70%; padding-bottom:70%; position:relative">
+		<div style="position:absolute; top:50%; right:50%">	
+			<span class='subtext'>Score</span>
+			<br/>
+			<span class='main_text'><%- ((score) * 100).toFixed(2) + '%' %></span>
+		</div>
+	</div>
+</div>
+<hr>
+
+
 <div class="columns is-multiline is-mobile">
 <% for(let image of data.graphql.user.edge_owner_to_timeline_media.edges) { %>
     <div class="column is-one-third">

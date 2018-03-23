@@ -38,3 +38,10 @@ body {
 #phrase {
     color: dimgrey;
 }
+.subtext{
+    font-size: 0.76em;
+    color: grey;
+}
+.main_test{
+    font-size: 20px;
+}
