@@ -41,7 +41,7 @@ app.set('view engine', 'ejs');
 
 
 stream.stop();
-app.get('/', (req, res) => {
+app.get('/stream', (req, res) => {
     res.render('index');
 });
 
@@ -53,18 +53,21 @@ io.on('connection', (socket) => {
         console.log('user disconnected');
     });
 });
-
 stream.on('tweet', tweet => {
+    // console.log(tweet);
     if ((tweet.lang == 'en' && tweet.user.location == 'Republic of the Philippines ') || tweet.lang == 'tl') {
         if (tweet.user.followers_count > 1000 && tweet.user.followers_count < 10000) {
+            io.emit('tweet', tweet);
             T.get('statuses/user_timeline', {screen_name: tweet.user.screen_name,count: 200,include_rts: false}, (err, tweets) => {
-                io.emit('tweet', tweets);
+               
             });
         }
     }
 });
 
-app.get('/instagra')
+app.get('/instagram', (req, res)=>{
+    
+});
 
 app.get('/instagram/:handle', (req, res) => {
     stream.stop();
@@ -77,9 +80,9 @@ app.get('/instagram/:handle', (req, res) => {
 });
 
 
-app.get('*', (req, res) => {
-    res.render('404');
-});
+// app.get('*', (req, res) => {
+//     res.render('404');
+// });
 
 server.listen(port, () => {
     console.log(`Application is listening at port ${port}: http://localhost:${port}`);
