@@ -54,7 +54,7 @@ class evaluater{
 			},(err,response) => {
 				sentiment_grade = 0;
 				for (let j = response.length - 1; j >= 0; j--) {
-					aggregate_sentiment_grade += speakeasy.classify(response[j].full_text);
+					aggregate_sentiment_grade += speakeasy.sentiment.analyze(response[j].full_text).score;
 				}
 			});
 		}
@@ -81,7 +81,7 @@ class evaluater{
 		let grader = new scorer();
 		let normalized_content_interaction_rate = (content_interaction_rate - min_content_interaction)/max_content_interaction;
 		let normalized_user_engagement_rate = (user_engagement_rate - min_user_engagement)/max_user_engagement;
-		return [grader.network.activate([normalized_content_interaction_rate, normalized_user_engagement_rate, sensitive_content_rate, aggregate_sentiment_grade])[0],is_beauty,is_family,content_interaction_rate,user_engagement_rate];
+		return [grader.network.activate([normalized_content_interaction_rate, normalized_user_engagement_rate, sensitive_content_rate, average_sentiment_grade])[0],is_beauty,is_family,content_interaction_rate,user_engagement_rate];
 	}
 
 	beauty_tagger(text) {
@@ -108,7 +108,6 @@ class evaluater{
 			}
 		}
 		return is_family;
-
 	}
 
 	debug(historical_tweets) {
