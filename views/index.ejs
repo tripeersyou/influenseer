@@ -1,35 +1,71 @@
 <%- include layouts/header %>
-    <a href="/stream" class="button">Start Streaming Tweets</a>
-    <a href="/leaderboards" class="button">View the Leaderboard</a>
-    <hr>
+<nav class="navbar is-transparent" role="navigation" aria-label="dropdown navigation">
+    <!--a class="navbar-item">
+      <img src="img/influenseer.png" alt="Influenseer" width="200" height="63">
+    </a-->
+  
+    <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="field is-grouped">
+            <a class="navbar-item" id = "nonaction" href="/leaderboards">Leaderboard</a>
+            <a href="/stream" class="button is-link is-hoverable" id = "iblue">Stream</a>
+          </div>
+        </div>
+      </div>
+  </nav>
+
+  <br><br><br>
+  <img src="img/influenseer.png" alt="Influenseer">
+  <h2 class="title is-2" id = "phrase">See who's trending today.</h2>
+  <br>
     <div class="columns">
         <div class="column">
-            <h2 class="subtitle">Instagram</h2>
+            <label class="label" id= "nonaction">Instagram</label>
             <form action="/instagram" method="get">
                 <div class="field">
-                    <input type="text" class="input" placeholder="username" name="handle">
+                    <input type="text" class="input" placeholder="Username" name="handle">
                 </div>
             </form>
         </div>
         <div class="column">
-            <h2 class="subtitle">Twitter</h2>
+            <label class="label" id= "nonaction">Twitter</label>
             <form action="/twitter" method="get">
                 <div class="field">
-                    <input type="text" class="input" placeholder="username" name="handle">
+                    <input type="text" class="input" placeholder="Username" name="handle">
                 </div>
             </form>       
         </div>
         <div class="column">
-            <h2 class="subtitle">Facebook</h2>
+                <label class="label" id= "nonaction">Facebook</label>
             <form action="/facebook" method="get">
                 <div class="field">
-                    <input type="text" class="input" placeholder="username" name="username" required>
+                    <input type="text" class="input" placeholder="Username" name="username" required>
                 </div>
                 <div class="field">
                     <input type="file" name="facebook_data" id="facebook_data" class="input" required>
                 </div>
-                <button class="button" type="submit">Submit</button>
+                <div class="field">
+                        <div class="file is-link has-name">
+                          <label class="file-label">
+                            <input class="file-input" id="iblue" type="file" name="resume">
+                            <span class="file-cta">
+                              <span class="file-icon">
+                                <i class="fas fa-upload"></i>
+                              </span>
+                              <span class="file-label">
+                                Upload
+                              </span>
+                            </span>
+                            <span class="file-name">
+                                File name chosen
+                              <!--put shit somewhere-->
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                <button class="button is-link is-hoverable" id = "search-button">Search</button>
             </form>
         </div>
     </div>
+          
 <%- include layouts/footer %>

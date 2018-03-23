@@ -1,0 +1,40 @@
+@font-face {
+    font-family: Proxima Nova;
+    src: url(proxima_nova_regular.otf);
+}
+@font-face {
+    font-family: Proxima Nova;
+    src: url(proxima_nova_extrabold.otf);
+    font-weight: bold;
+}
+@font-face {
+    font-family: Proxima Nova;
+    src: url(proxima_nova_semibold.otf);
+    font-weight: 500;
+}
+* {
+    font-family: Proxima Nova;
+}
+body {
+     min-height: 100vh;
+     background-color: #F7FAFF;
+}
+.navbar {
+    padding-top: 15px;
+    background-color: #F7FAFF;
+}
+.influenseer-button {
+    padding: 23px 20px 23px 20px;
+}
+#iblue {
+    background-color: #1875F0;
+    padding: 23px 20px 23px 20px;
+}
+#nonaction {
+    color: grey;
+    margin-right: 15px;
+    font-weight: normal;
+}
+#phrase {
+    color: dimgrey;
+}
