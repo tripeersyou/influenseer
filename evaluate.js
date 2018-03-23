@@ -128,3 +128,6 @@ class evaluater{
 
 	}
 }
+
+
+module.exports = evaluater;
