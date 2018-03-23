@@ -82,6 +82,7 @@ stream.on('tweet', tweet => {
                     is_family: results[2]
                 };
                 io.emit('tweet', tweet);
+                console.log('Requested');
                 db.leaderboard.find({
                     platform: 'twitter',
                     screen_name: tweet.user.screen_name
@@ -191,10 +192,10 @@ app.get('/facebook', (req,res,next)=>{
 
 app.post('/facebook', (req, res, next) => {
     stream.stop();
-    let file = req.files.facebook_data[0];
-    let file2 = req.files.facebook_data[1];
+    let file = req.files.facebook_data;
+    let file2 = req.files.facebook_data;
     file.mv('uploads/data.csv', function(err){ if (err) { console.log(err); }});
-    file.mv('uploads/data2.csv', function(err){ if (err) { console.log(err); }});
+    file2.mv('uploads/data2.csv', function(err){ if (err) { console.log(err); }});
     let posts = [];
     let comments = [];
     let result;
@@ -234,11 +235,19 @@ app.post('/facebook', (req, res, next) => {
 
 app.get('/leaderboards', (req, res)=>{
     stream.stop();
-    db.leaderboard.find().sort({score: -1},(err,docs)=>{
-        res.render('leaderboard', {
-            influencers: docs
+    if (req.query.show) {
+        db.leaderboard.find({platform: req.query.show}).sort({score: -1},(err,docs)=>{
+            res.render('leaderboard', {
+                influencers: docs
+            });
         });
-    });
+    } else {
+        db.leaderboard.find().sort({score: -1},(err,docs)=>{
+            res.render('leaderboard', {
+                influencers: docs
+            });
+        });
+    }
 });
 
 // app.get('*', (req, res) => {
@@ -248,4 +257,3 @@ app.get('/leaderboards', (req, res)=>{
 server.listen(port, () => {
     console.log(`Application is listening at port ${port}: http://localhost:${port}`);
 });
-stream.stop();

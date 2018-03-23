@@ -3,7 +3,18 @@
 	<
 </a>
 <h2 class="title">Leaderboards</h2>
-<table class="table">
+<form action="/leaderboards" method="get">
+    <div class="field">
+        <select name="sort_by" id="sort_by" class="input">
+            <option value=""></option>
+            <option value="twitter">Twitter</option>
+            <option value="instagram">Instagram</option>
+            <option value="facebook">Facebook</option>
+        </select>
+    </div>
+</form>
+<br>
+<table class="table" style="width:100%;">
     <thead>
         <tr>
             <thead>
