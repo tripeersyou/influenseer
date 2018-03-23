@@ -41,8 +41,13 @@ app.set('view engine', 'ejs');
 
 
 stream.stop();
-app.get('/stream', (req, res) => {
+
+app.get('/', (req, res)=>{
     res.render('index');
+});
+
+app.get('/stream', (req, res) => {
+    res.render('stream');
 });
 
 io.on('connection', (socket) => {
@@ -54,10 +59,8 @@ io.on('connection', (socket) => {
     });
 });
 stream.on('tweet', tweet => {
-    // console.log(tweet);
     if ((tweet.lang == 'en' && tweet.user.location == 'Republic of the Philippines ') || tweet.lang == 'tl') {
         if (tweet.user.followers_count > 1000 && tweet.user.followers_count < 10000) {
-            io.emit('tweet', tweet);
             T.get('statuses/user_timeline', {screen_name: tweet.user.screen_name,count: 200,include_rts: false}, (err, tweets) => {
                
             });
