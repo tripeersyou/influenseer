@@ -84,9 +84,6 @@ function debug(historical_tweets) {
 
 }
 
-
-
-
 // Test
 var fs = require('fs')
 data = JSON.parse(fs.readFileSync('data/twitter.json'));

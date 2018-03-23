@@ -1,34 +1,8 @@
 <%- include layouts/header %>
-    <h1 class="is title">Influenseer</h1>
-    <h2 class="is subtitle">Tweet Stream . . .</h2>
-    <h2 class="is subtitle">Candidates:</h2>    
-    <div id="candidates" class="columns is-multiline">
+    <div class="container">
+        <h1 class="title">influenseer <small>see whos's trending</small></h1>
+        <form action="/stream" method="get">
+            
+        </form>
     </div>
-    <script src="/js/lib/socket.io.js"></script>
-    <script>
-    var socket = io.connect('/');
-    candidates = document.getElementById('candidates');
-    socket.on('tweet', function (tweet) {
-        console.log(tweet);
-        candidates.innerHTML += `<div class="card column is-one-third">
-                            <div class="card-image">
-                                <figure class="image is-4by3">
-                                    <img src="${tweet.user.profile_background_image_url_https}" alt="${tweet.user.screen_name}">
-                                </figure>
-                            </div>
-                            <div class="card-content">
-                                <div class="media">
-                                    <div class="media-left">
-                                        <figure class="image is-48x48">
-                                            <img src="${tweet.user.profile_image_url_https}">
-                                        </figure>
-                                    </div>
-                                    <div class="media-content">
-                                      <p class="title is-4">${tweet.user.name}</p>
-                                      <p class="subtitle is-6">@${tweet.user.screen_name}</p>
-                                    </div>
-                                </div>
-                            </div>`;
-    });
-    </script>
 <%- include layouts/footer %>
