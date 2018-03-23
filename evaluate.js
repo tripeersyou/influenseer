@@ -72,10 +72,10 @@
 	}
 
 	function debug(historical_tweets) {
-		// historical_tweets = historical_tweets.slice(0,2);
+		historical_tweets = historical_tweets.slice(175,200);
 		for (var i = historical_tweets.length - 1; i >= 0; i--) {
 			T.get('statuses/retweets/:id', {
-				count: 25,
+				count: 5,
 				id: historical_tweets[i].id_str,
 			},(err, response) => {
 				sentiment_grade = 0;
