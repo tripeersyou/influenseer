@@ -63,7 +63,6 @@ io.on('connection', (socket) => {
     });
 });
 stream.on('tweet', tweet => {
-    // console.log(tweet.user.screen_name);
     if ((tweet.lang == 'en' && tweet.user.location == 'Republic of the Philippines ') || tweet.lang == 'tl') {
         if (tweet.user.followers_count > 1000 && tweet.user.followers_count < 10000) {
             T.get('statuses/user_timeline', {
@@ -71,8 +70,25 @@ stream.on('tweet', tweet => {
                 count: 200,
                 include_rts: false
             }, (err, tweets) => {
-                console.log(eval.evaluate(tweets));
+                let results = eval.evaluate(tweets)
+                let entity = {
+                    platform: 'twitter',
+                    screen_name: tweet.user.screen_name,
+                    follower_count: tweet.user.followers_count,
+                    score: results[0],
+                    is_beauty: results[1],
+                    is_family: results[2],
+                    content_interaction: results[3],
+                    user_engagement: results [4],
+                }
                 io.emit('tweet', tweet);
+                db.leaderboard.find({platform: 'twitter', screen_name: tweet.user.screen_name}, (err,docs)=>{
+                    if(docs.length == 0) {
+                        db.leaderboard.insert(entity,(err, res)=>{});                        
+                    } else {
+                        db.leaderboard.update({platform: 'twitter', screen_name: tweet.user.screen_name}, entity, (err, res)=>{});
+                    }
+                });
             });
         }
     }
