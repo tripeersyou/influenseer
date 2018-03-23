@@ -13,7 +13,7 @@ const tokenizer = new natural.WordTokenizer();
 const speakeasy = require('speakeasy-nlp')
 
 class evaluater{
-	evaluate(tweets, id) {
+	evaluate(tweets, id, max_user_engagement = 1, min_user_engagement = 0, max_content_interaction = 1, min_content_interaction = 0) {
 		let favourites = 0;
 		let retweets = 0;
 		let follow = 0;
@@ -48,14 +48,15 @@ class evaluater{
 		content_interaction_rate = (posts_with_interactions) / historical_tweets.length;
 		sensitive_content_rate = sensitive_content_posts / historical_tweets.length;
 
-		for (var i = historical_tweets.length - 1; i >= 0; i--) {
+		for (let i = historical_tweets.length - 1; i >= 0; i--) {
 			T.get('statuses/retweets/:id', {
 				id: historical_tweets[i].id_str
-			}).
-			then(response => {
+			},(err,response) => {
 				sentiment_grade = 0;
-				for (var i = response.length - 1; i >= 0; i--) {
-					aggregate_sentiment_grade += speakeasy.classify(response[i].text);
+				console.log(response);
+				for (let j = response.length - 1; j >= 0; j--) {
+					console.log(response[j].text);
+					aggregate_sentiment_grade += speakeasy.classify(response[j].full_text);
 				}
 			});
 		}
@@ -80,7 +81,9 @@ class evaluater{
 		}
 
 		let grader = new scorer();
-		return [grader.network.activate([content_interaction_rate, user_engagement_rate, sensitive_content_rate, average_sentiment_grade]),is_beauty,is_family];
+		let normalized_content_interaction_rate = (content_interaction_rate - min_content_interaction)/max_content_interaction;
+		let normalized_user_engagement_rate = (user_engagement_rate - min_user_engagement)/max_user_engagement;
+		return [grader.network.activate([normalized_content_interaction_rate, normalized_user_engagement_rate, sensitive_content_rate, aggregate_sentiment_grade]),is_beauty,is_family,content_interaction_rate,user_engagement_rate];
 	}
 
 	beauty_tagger(text) {
