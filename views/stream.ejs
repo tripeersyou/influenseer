@@ -1,5 +1,8 @@
 <%- include layouts/header %>
-    <h2 class="is subtitle">Tweet Stream . . .</h2>
+<a class="button is-primary" href='/' style="position: fixed; top: 80%; right:5%; height: 60px; width: 60px; border-radius:50%; z-index:999">
+	<
+</a>
+    <h2 class="is title">Tweet Stream:</h2>
     <h2 class="is subtitle">Candidates:</h2> 
     <div id="candidates" class="columns is-multiline">
     </div>
@@ -19,10 +22,12 @@
                                 <div class="media">
                                     <div class="media-left">
                                         <figure class="image is-48x48">
-                                            <img src="${tweet.user.profile_image_url_https}">
+                                            <a href="https://twitter.com/${tweet.user.screen_name}">
+                                                <img src="${tweet.user.profile_image_url_https}">
+                                            </a>
                                         </figure>
                                     </div>
-                                    <div class="media-content">
+                                    <div class="media-content" style="overflow:hidden;">
                                       <p class="title is-4">${tweet.user.name}</p>
                                       <p class="subtitle is-6">@${tweet.user.screen_name}</p>
                                     </div>

@@ -50,17 +50,19 @@ class evaluater{
 
 		for (let i = historical_tweets.length - 1; i >= 0; i--) {
 			T.get('statuses/retweets/:id', {
-				id: historical_tweets[i].id_str
+				id: historical_tweets[i].id_str,
+				count: 10
 			},(err,response) => {
+				if (err) {console.log(err)}
 				sentiment_grade = 0;
 				for (let j = response.length - 1; j >= 0; j--) {
-					aggregate_sentiment_grade += speakeasy.sentiment.analyze(response[j].full_text).score;
+					aggregate_sentiment_grade += speakeasy.sentiment.analyze(response[j].text).score;
+					console.log(aggregate_sentiment_grade);
 				}
 			});
 		}
 
-		average_sentiment_grade = aggregate_sentiment_grade / total_retweets;
-
+		average_sentiment_grade = parseFloat(aggregate_sentiment_grade / 10);
 
 		for (let tweet of historical_tweets){ 
 			let text = tokenizer.tokenize(tweet.text);
@@ -81,6 +83,10 @@ class evaluater{
 		let grader = new scorer();
 		let normalized_content_interaction_rate = (content_interaction_rate - min_content_interaction)/max_content_interaction;
 		let normalized_user_engagement_rate = (user_engagement_rate - min_user_engagement)/max_user_engagement;
+		console.log(normalized_content_interaction_rate);
+		console.log(normalized_user_engagement_rate);
+		console.log(sensitive_content_rate);
+		if(isNaN(average_sentiment_grade)) {average_sentiment_grade = 0}
 		return [grader.network.activate([normalized_content_interaction_rate, normalized_user_engagement_rate, sensitive_content_rate, average_sentiment_grade])[0],is_beauty,is_family,content_interaction_rate,user_engagement_rate];
 	}
 

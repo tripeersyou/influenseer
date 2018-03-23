@@ -1,6 +1,8 @@
 <%- include layouts/header %>
-<h2 class="subtitle">Leaderboards</h2>
-<a href="/" class="button">Back</a>
+<a class="button is-primary" href='/' style="position: fixed; top: 80%; right:5%; height: 60px; width: 60px; border-radius:50%; z-index:999">
+	<
+</a>
+<h2 class="title">Leaderboards</h2>
 <table class="table">
     <thead>
         <tr>
@@ -23,7 +25,7 @@
                 <td><%- influencer.platform%></td>
                 <td><%- influencer.screen_name%></td>
                 <td><%- influencer.follower_count %></td>
-                <td><%- Math.round(influencer.score * 100) / 100 %></td>
+                <td><%- ((influencer.score) * 100).toFixed(2) + '%' %></td>
                 <td><%- influencer.is_beauty%></td>
                 <td><%- influencer.is_family%></td>
             </tr>

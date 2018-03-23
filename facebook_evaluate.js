@@ -8,8 +8,8 @@ const natural = require('natural');
 const tokenizer = new natural.WordTokenizer();
 const speakeasy = require('speakeasy-nlp')
 
-class facebook_evaluate{
-	evaluate(posts,comments){
+class facebook_evaluate {
+	evaluate(posts, comments) {
 		let average_angry = 0;
 		let all_reactions = 0;
 		let average_engagment = 0;
@@ -18,46 +18,44 @@ class facebook_evaluate{
 		let is_beauty = false;
 		let is_family = false;
 
-		for(let post of posts){
-			let total_reactions = parseInt(post[1])+parseInt(post[2])+parseInt(post[3])+parseInt(post[4])+parseInt(post[5])+parseInt(post[6])+parseInt(post[7]);
-			average_angry += parseInt(post[1])/total_reactions;
+		for (let post of posts) {
+			let total_reactions = parseInt(post.follower_count) + parseInt(post.angry_count) + parseInt(post.happy_count) + parseInt(post.sad_count) + parseInt(post.laughing_count) + parseInt(post.like_count) + parseInt(post.love_count);
+			average_angry += parseInt(post.follower_count) / total_reactions;
 			all_reactions += total_reactions;
 
-			if((parseInt(post[1])+parseInt(post[2])+parseInt(post[3])+parseInt(post[4])+parseInt(post[5])+parseInt(post[6])+parseInt(post[7]))!=0){
+			if ((parseInt(post.follower_count) + parseInt(post.angry_count) + parseInt(post.happy_count) + parseInt(post.sad_count) + parseInt(post.laughing_count) + parseInt(post.like_count) + parseInt(post.love_count)) != 0) {
 				interaction_rate++;
 			}
-		}	
-
-		for(let comment of comments){
-			sentiment_grade += speakeasy.sentiment.analyze(comment[11]).score;
 		}
 
-		sentiment_grade = sentiment_grade/posts.length;
+		for (let comment of comments) {
+			sentiment_grade += speakeasy.sentiment.analyze(comment.text).score;
+		}
 
-		average_angry/=posts.length;
-		average_engagment = (all_reactions/parseInt(posts[0][0]))/posts.length;
-		interaction_rate = interaction_rate/posts.length;
+		sentiment_grade = sentiment_grade / posts.length;
+
+		average_angry /= posts.length;
+		average_engagment = (all_reactions / parseInt(posts[0].follower_count)) / posts.length;
+		interaction_rate = interaction_rate / posts.length;
 
 
-		for(let post in posts){
-			if(this.beauty_tagger(tokenizer.tokenize(post[10]))){
+		for (let post of posts) {
+			if (this.beauty_tagger(tokenizer.tokenize(post.text))) {
 				is_beauty = true;
 				break;
 			}
 		}
 
-		for(let post in posts){
-			if(this.family_tagger(tokenizer.tokenize(post[10]))){
+		for (let post of posts) {
+			if (this.family_tagger(tokenizer.tokenize(post.text))) {
 				is_family = true;
 				break;
 			}
 		}
 
 
-		var grader =  new scorer();
-		return([grader.network.activate([average_engagment,sentiment_grade,average_angry,interaction_rate])[0],is_beauty,is_familys]);
-
-
+		var grader = new scorer();
+		return ([grader.network.activate([average_engagment, sentiment_grade, average_angry, interaction_rate])[0], is_beauty, is_family]);
 
 	}
 
@@ -88,3 +86,5 @@ class facebook_evaluate{
 
 	}
 }
+
+module.exports = facebook_evaluate;

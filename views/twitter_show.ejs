@@ -1,16 +1,34 @@
 <%- include layouts/header %>
-<a href="/" class="button">Back</a>
+<a class="button is-primary" href='/' style="position: fixed; top: 80%; right:5%; height: 60px; width: 60px; border-radius:50%; z-index:999">
+	<
+</a>
 <div class="card">
     <div class="card-content">
         <div class="media">
             <div class="media-left">
                 <figure class="image is-48x48">
-                    <img src="<%- user.profile_image_url_https %>">
+                <a href="https://twitter.com/<%- user.screen_name %>">
+                    <img src="<%- user.profile_image_url_https %>">                    
+                </a>
                 </figure>
             </div>
-            <div class="media-content">
+            <div class="media-content" style="overflow:hidden;">
                 <p class="title is-4"><%-user.name %></p>
                 <p class="subtitle is-6">@<%- user.screen_name %></p>
+            </div>
+            <div class="columns">
+                <div class="column">
+                    <p class="title is-6">Followers Count:</p>
+                    <%- user.followers_count %>    
+                </div>
+                <div class="column">
+                <p class="title is-6">Statuses Count:</p>
+                    <%- user.statuses_count %>    
+                </div>
+                <div class="column">
+                    <p class="title is-6">Score:</p>
+                    <%- ((score) * 100).toFixed(2) + '%' %>    
+                </div>
             </div>
         </div>
     </div>
@@ -21,17 +39,6 @@
     <div class="column is-one-third">
         <div class="card">
             <div class="card-content">
-                <div class="media">
-                    <div class="media-left">
-                        <figure class="image is-48x48">
-                            <img src="<%- user.profile_image_url_https %>">
-                        </figure>
-                    </div>
-                    <div class="media-content">
-                        <p class="title is-4"><%-user.name %></p>
-                        <p class="subtitle is-6">@<%- user.screen_name %></p>
-                    </div>
-                </div>
                 <div class="content">
                     <%- tweet.text %>
                     <br>

@@ -16,6 +16,9 @@ const eval = new Evaluator();
 const IgEvaluator = require('./instagram_evaluate');
 const ig_eval = new IgEvaluator();
 
+const FbEvaluator = require('./facebook_evaluate');
+const fb_eval = new FbEvaluator();
+
 // Express, Socket.io, Mongojs and FS
 const express = require('express');
 const fileUpload = require('express-fileupload');
@@ -151,6 +154,7 @@ app.get('/twitter', (req, res) => {
             count: 200
         }, (err, tweets) => {
             let results = eval.evaluate(tweets);
+            console.log(results)
             let entity = {
                 platform: 'twitter',
                 screen_name: user,
@@ -174,25 +178,57 @@ app.get('/twitter', (req, res) => {
             });
             res.render('twitter_show', {
                 user: data,
-                tweets: tweets
+                tweets: tweets,
+                score: results[0]
             });
         });
     });
 });
 
-app.post('/facebook', (req, res) => {
-    stream.stop();
-    let file = req.files.facebook_data;
-    let options = {
-        delimiter : ',', 
-        quote     : '"'
-    };
-    file.mv('uploads/data.csv', function(err){ if (err) { console.log(err); }});
+app.get('/facebook', (req,res,next)=>{
+    res.redirect('/');
+});
 
+app.post('/facebook', (req, res, next) => {
+    stream.stop();
+    let file = req.files.facebook_data[0];
+    let file2 = req.files.facebook_data[1];
+    file.mv('uploads/data.csv', function(err){ if (err) { console.log(err); }});
+    file.mv('uploads/data2.csv', function(err){ if (err) { console.log(err); }});
+    let posts = [];
+    let comments = [];
+    let result;
     csvtojson().fromFile('uploads/data.csv').on('json',(jsonObj)=>{
-        console.log(jsonObj);
+        posts.push(jsonObj);
+        csvtojson().fromFile('uploads/data2.csv').on('json',(jsonObj)=>{
+            comments.push(jsonObj);
+            
+        }).on('done',(error)=>{
+        });
     }).on('done',(error)=>{
-        
+        result = fb_eval.evaluate(posts,comments);
+        let entity = {
+            platform: 'facebook',
+            screen_name: req.body.username,
+            follower_count: posts[0].follower_count,
+            score: result[0],
+            is_beauty: result[1],
+            is_family: result[2]
+        };
+        db.leaderboard.find({
+            platform: 'facebook',
+            screen_name: req.body.username
+        }, (err, docs) => {
+            if (docs.length == 0) {
+                db.leaderboard.insert(entity, (err, res) => {});
+            } else {
+                db.leaderboard.update({
+                    platform: 'facebook',
+                    screen_name: req.body.username
+                }, entity, (err, res) => {});
+            }
+        });
+        res.render('facebook_show', {posts: posts, score: result[0], username: req.body.username});
     });
 });
 
@@ -213,4 +249,3 @@ server.listen(port, () => {
     console.log(`Application is listening at port ${port}: http://localhost:${port}`);
 });
 stream.stop();
-

@@ -1,0 +1,11 @@
+<%- include layouts/header %>
+<a class="button is-primary" href='/' style="position: fixed; top: 80%; right:5%; height: 60px; width: 60px; border-radius:50%; z-index:999">
+	<
+</a>
+<a href="https://facebook.com/<%- username %>" class="title">Username</a>
+ <%- score %>
+ <% for(let post of posts) {%>
+    <p><%- post.text %></p>
+
+ <% } %>
+<%- include layouts/footer %>
