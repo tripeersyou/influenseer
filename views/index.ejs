@@ -7,7 +7,6 @@
     var socket = io.connect('/');
     tweets = document.getElementById('tweets');
     socket.on('tweet', function (data) {
-        console.log(data);
         for(let tweet of data) {
             tweets.innerHTML += `<li>${tweet.user.screen_name}: ${tweet.text}: ${tweet.retweet_count} retweets and ${tweet.favorite_count} favorites</li>`;
         }

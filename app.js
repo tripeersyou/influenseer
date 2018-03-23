@@ -23,10 +23,9 @@ const server = require('http').Server(app)
 const io = require('socket.io')(server);
 const mongojs = require('mongojs');
 
-const db = mongojs(process.env.db_uri, ['tweets']);
+const db = mongojs(process.env.db_uri, ['leaderboard']);
 const port = process.env.PORT || 8000;
 const fs = require('fs');
-
 
 
 // Middleware
@@ -65,12 +64,16 @@ stream.on('tweet', tweet => {
     }
 });
 
+app.get('/instagra')
+
 app.get('/instagram/:handle', (req, res) => {
+    stream.stop();
 	let user = req.params.handle;
 	ig.getUserData(user).then(data => {
-        console.log(data);
-		res.render('ig_show', {data: data});
-	});
+        res.render('ig_show',{data: data});
+ 	}).catch(data =>{
+         res.render('404');
+     });
 });
 
 
