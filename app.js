@@ -76,9 +76,7 @@ stream.on('tweet', tweet => {
                     follower_count: tweet.user.followers_count,
                     score: results[0],
                     is_beauty: results[1],
-                    is_family: results[2],
-                    content_interaction: results[3],
-                    user_engagement: results[4],
+                    is_family: results[2]
                 };
                 io.emit('tweet', tweet);
                 db.leaderboard.find({
@@ -107,7 +105,28 @@ app.get('/instagram', (req, res) => {
     }
     ig.getUserData(user).then(data => {
         if (data.graphql.user.edge_owner_to_timeline_media.edges.length > 0) {
-            ig_eval.evaluate(data);
+            let results = ig_eval.evaluate(data);
+            let entity = {
+                platform: 'instagram',
+                screen_name: data.graphql.user.username,
+                follower_count: data.graphql.user.edge_followed_by.count,
+                score: results[0],
+                is_beauty: results[1],
+                is_family: results[2]
+            };
+            db.leaderboard.find({
+                platform: 'instagram',
+                screen_name: data.graphql.user.username
+            }, (err, docs) => {
+                if (docs.length == 0) {
+                    db.leaderboard.insert(entity, (err, res) => {});
+                } else {
+                    db.leaderboard.update({
+                        platform: 'instagram',
+                        screen_name: data.graphql.user.username
+                    }, entity, (err, res) => {});
+                }
+            });
             res.render('ig_show', {
                 data: data
             });
@@ -115,6 +134,7 @@ app.get('/instagram', (req, res) => {
             res.render('404');
         }
     }).catch(data => {
+        console.log(data);
         res.render('404');
     });
 });
@@ -136,9 +156,7 @@ app.get('/twitter', (req, res) => {
                 follower_count: data.followers_count,
                 score: results[0],
                 is_beauty: results[1],
-                is_family: results[2],
-                content_interaction: results[3],
-                user_engagement: results[4],
+                is_family: results[2]
             };
             db.leaderboard.find({
                 platform: 'twitter',
