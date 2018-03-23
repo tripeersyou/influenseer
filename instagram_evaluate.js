@@ -22,6 +22,7 @@ class instagram_evaluater{
 		let is_beauty = false;
 		let is_family = false;
 		let gaps = [];
+		let within_range = 0;
 		for(let posts of posts_timeline){
 			sum_engagement += parseInt(posts.node.edge_liked_by.count);
 			
@@ -52,6 +53,12 @@ class instagram_evaluater{
 				}
 		}
 
+		for(gap in gaps){
+			if(gap<8640000){
+				within_range++;
+			}
+		}
+
 		for(posts of posts_timeline){
 			for(let node of posts.node.edge_media_to_caption.edges){
 					if(this.family_tagger(tokenizer.tokenize(node.node.text))){
@@ -74,7 +81,7 @@ class instagram_evaluater{
 		console.log(comments_disabled_rate);
 		console.log(gap_grade);
 
-		return(grade.network.activate([parseFloat(mean_user_engagement_rate),parseFloat(interaction_rate),parseFloat(comments_disabled_rate),parseFloat(gap_grade)]));
+		return(grade.network.activate([parseFloat(mean_user_engagement_rate),parseFloat(interaction_rate),parseFloat(comments_disabled_rate),parseFloat(within_range/posts_timeline.length)]));
 
 	}
 
