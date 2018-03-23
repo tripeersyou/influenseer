@@ -13,6 +13,9 @@ const ig = require('instagram-scraper');
 const Evaluator = require('./evaluate');
 const eval = new Evaluator();
 
+const IgEvaluator = require('./instagram_evaluate');
+const ig_eval = new IgEvaluator();
+
 // Express, Socket.io, Mongojs and FS
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -28,10 +31,6 @@ const port = process.env.PORT || 8000;
 const fs = require('fs');
 const csv = require('csv-parser');
 
-
-// data = JSON.parse(fs.readFileSync('data/twitter_2.json'));
-// console.log(eval.evaluate(data));
-
 // Middleware
 app.use(bodyParser.urlencoded({
     extended: false
@@ -44,9 +43,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 
-stream.stop();
-
 app.get('/', (req, res) => {
+    stream.stop();
     res.render('index');
 });
 
@@ -62,6 +60,7 @@ io.on('connection', (socket) => {
         console.log('user disconnected');
     });
 });
+
 stream.on('tweet', tweet => {
     if ((tweet.lang == 'en' && tweet.user.location == 'Republic of the Philippines ') || tweet.lang == 'tl') {
         if (tweet.user.followers_count > 1000 && tweet.user.followers_count < 10000) {
@@ -77,16 +76,20 @@ stream.on('tweet', tweet => {
                     follower_count: tweet.user.followers_count,
                     score: results[0],
                     is_beauty: results[1],
-                    is_family: results[2],
-                    content_interaction: results[3],
-                    user_engagement: results [4],
-                }
+                    is_family: results[2]
+                };
                 io.emit('tweet', tweet);
-                db.leaderboard.find({platform: 'twitter', screen_name: tweet.user.screen_name}, (err,docs)=>{
-                    if(docs.length == 0) {
-                        db.leaderboard.insert(entity,(err, res)=>{});                        
+                db.leaderboard.find({
+                    platform: 'twitter',
+                    screen_name: tweet.user.screen_name
+                }, (err, docs) => {
+                    if (docs.length == 0) {
+                        db.leaderboard.insert(entity, (err, res) => {});
                     } else {
-                        db.leaderboard.update({platform: 'twitter', screen_name: tweet.user.screen_name}, entity, (err, res)=>{});
+                        db.leaderboard.update({
+                            platform: 'twitter',
+                            screen_name: tweet.user.screen_name
+                        }, entity, (err, res) => {});
                     }
                 });
             });
@@ -97,11 +100,41 @@ stream.on('tweet', tweet => {
 app.get('/instagram', (req, res) => {
     stream.stop();
     let user = req.query.handle;
+    if (user == undefined) {
+        res.send('No username given.')
+    }
     ig.getUserData(user).then(data => {
-        res.render('ig_show', {
-            data: data
-        });
+        if (data.graphql.user.edge_owner_to_timeline_media.edges.length > 0) {
+            let results = ig_eval.evaluate(data);
+            let entity = {
+                platform: 'instagram',
+                screen_name: data.graphql.user.username,
+                follower_count: data.graphql.user.edge_followed_by.count,
+                score: results[0],
+                is_beauty: results[1],
+                is_family: results[2]
+            };
+            db.leaderboard.find({
+                platform: 'instagram',
+                screen_name: data.graphql.user.username
+            }, (err, docs) => {
+                if (docs.length == 0) {
+                    db.leaderboard.insert(entity, (err, res) => {});
+                } else {
+                    db.leaderboard.update({
+                        platform: 'instagram',
+                        screen_name: data.graphql.user.username
+                    }, entity, (err, res) => {});
+                }
+            });
+            res.render('ig_show', {
+                data: data
+            });
+        } else {
+            res.render('404');
+        }
     }).catch(data => {
+        console.log(data);
         res.render('404');
     });
 });
@@ -116,7 +149,28 @@ app.get('/twitter', (req, res) => {
             screen_name: user,
             count: 200
         }, (err, tweets) => {
-            console.log(eval.evaluate(tweets));
+            let results = eval.evaluate(tweets);
+            let entity = {
+                platform: 'twitter',
+                screen_name: user,
+                follower_count: data.followers_count,
+                score: results[0],
+                is_beauty: results[1],
+                is_family: results[2]
+            };
+            db.leaderboard.find({
+                platform: 'twitter',
+                screen_name: user
+            }, (err, docs) => {
+                if (docs.length == 0) {
+                    db.leaderboard.insert(entity, (err, res) => {});
+                } else {
+                    db.leaderboard.update({
+                        platform: 'twitter',
+                        screen_name: user
+                    }, entity, (err, res) => {});
+                }
+            });
             res.render('twitter_show', {
                 user: data,
                 tweets: tweets
@@ -128,6 +182,15 @@ app.get('/twitter', (req, res) => {
 app.get('/facebook', (req, res) => {
     stream.stop();
     let file = req.query.facebook_data;
+});
+
+app.get('/leaderboards', (req, res)=>{
+    stream.stop();
+    db.leaderboard.find((err,docs)=>{
+        res.render('leaderboard', {
+            influencers: docs
+        });
+    });
 });
 
 // app.get('*', (req, res) => {

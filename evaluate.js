@@ -53,9 +53,7 @@ class evaluater{
 				id: historical_tweets[i].id_str
 			},(err,response) => {
 				sentiment_grade = 0;
-				// console.log(response);
 				for (let j = response.length - 1; j >= 0; j--) {
-					// console.log(response[j].text);
 					aggregate_sentiment_grade += speakeasy.classify(response[j].full_text);
 				}
 			});
@@ -130,5 +128,6 @@ class evaluater{
 
 	}
 }
+
 
 module.exports = evaluater;
