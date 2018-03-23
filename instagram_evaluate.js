@@ -122,9 +122,4 @@ class instagram_evaluater{
 	}
 }
 
-
-
-var fs = require('fs')
-data = JSON.parse(fs.readFileSync('data/user.json'));
-var eva = new instagram_evaluater();
-console.log(eva.evaluate(data));
+module.exports = instagram_evaluater;

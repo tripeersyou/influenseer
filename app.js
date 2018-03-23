@@ -13,6 +13,9 @@ const ig = require('instagram-scraper');
 const Evaluator = require('./evaluate');
 const eval = new Evaluator();
 
+const IgEvaluator = require('./instagram_evaluate');
+const ig_eval = new IgEvaluator();
+
 // Express, Socket.io, Mongojs and FS
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -104,6 +107,7 @@ app.get('/instagram', (req, res) => {
     }
     ig.getUserData(user).then(data => {
         if (data.graphql.user.edge_owner_to_timeline_media.edges.length > 0) {
+            ig_eval.evaluate(data);
             res.render('ig_show', {
                 data: data
             });
