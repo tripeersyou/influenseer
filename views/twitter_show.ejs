@@ -1,4 +1,5 @@
 <%- include layouts/header %>
+<a href="/" class="button">Back</a>
 <div class="card">
     <div class="card-content">
         <div class="media">
@@ -14,13 +15,33 @@
         </div>
     </div>
 </div>
+<br>
 <div class="columns is-multiline">
     <% for(let tweet of tweets) {%>
     <div class="column is-one-third">
-        <%- tweet.text %>
+        <div class="card">
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-left">
+                        <figure class="image is-48x48">
+                            <img src="<%- user.profile_image_url_https %>">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <p class="title is-4"><%-user.name %></p>
+                        <p class="subtitle is-6">@<%- user.screen_name %></p>
+                    </div>
+                </div>
+                <div class="content">
+                    <%- tweet.text %>
+                    <br>
+                    <a href="https://twitter.com/<%- user.screen_name%>/status/<%- tweet.id_str %>">
+                        <time datetime="2016-1-1"><%- tweet.created_at %></time>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
     <% }%>
 </div>
-<br>
-<a href="/" class="button">Back</a>
 <%- include layouts/footer %>
