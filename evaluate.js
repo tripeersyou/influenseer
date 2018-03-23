@@ -53,11 +53,10 @@ class evaluater{
 				id: historical_tweets[i].id_str,
 				count: 10
 			},(err,response) => {
-				if (err) {console.log(err)}
+				if (err) {console.log}
 				sentiment_grade = 0;
 				for (let j = response.length - 1; j >= 0; j--) {
 					aggregate_sentiment_grade += speakeasy.sentiment.analyze(response[j].text).score;
-					console.log(aggregate_sentiment_grade);
 				}
 			});
 		}
