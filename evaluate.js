@@ -53,7 +53,13 @@ class evaluater{
 				id: historical_tweets[i].id_str
 			},(err,response) => {
 				sentiment_grade = 0;
+<<<<<<< HEAD
 				for (let j = response.length - 1; j >= 0; j--) {
+=======
+				// console.log(response);
+				for (let j = response.length - 1; j >= 0; j--) {
+					// console.log(response[j].text);
+>>>>>>> e265abeb3dbbe0a2a515307a2364b6eb2d2c5f4b
 					aggregate_sentiment_grade += speakeasy.classify(response[j].full_text);
 				}
 			});
@@ -63,7 +69,7 @@ class evaluater{
 
 
 		for (let tweet of historical_tweets){ 
-			let text = tokenizer.tokenize(tweet.full_text);
+			let text = tokenizer.tokenize(tweet.text);
 			if(this.beauty_tagger(text)){
 				is_beauty = true;
 				break;
@@ -71,7 +77,7 @@ class evaluater{
 		}
 
 		for (let tweet of historical_tweets){ 
-			let text = tokenizer.tokenize(tweet.full_text);
+			let text = tokenizer.tokenize(tweet.text);
 			if(this.family_tagger(text)){
 				is_family = true;
 				break;
@@ -81,7 +87,7 @@ class evaluater{
 		let grader = new scorer();
 		let normalized_content_interaction_rate = (content_interaction_rate - min_content_interaction)/max_content_interaction;
 		let normalized_user_engagement_rate = (user_engagement_rate - min_user_engagement)/max_user_engagement;
-		return [grader.network.activate([normalized_content_interaction_rate, normalized_user_engagement_rate, sensitive_content_rate, aggregate_sentiment_grade]),is_beauty,is_family,content_interaction_rate,user_engagement_rate];
+		return [grader.network.activate([normalized_content_interaction_rate, normalized_user_engagement_rate, sensitive_content_rate, aggregate_sentiment_grade])[0],is_beauty,is_family,content_interaction_rate,user_engagement_rate];
 	}
 
 	beauty_tagger(text) {
@@ -122,18 +128,9 @@ class evaluater{
 				id: historical_tweets[i].id_str,
 			}, (err, response) => {
 				sentiment_grade = 0;
-				console.log(response);
+				// console.log(response);
 			});
 		}
 
 	}
 }
-
-// Test
-
-var fs = require('fs')
-data = JSON.parse(fs.readFileSync('data/twitter.json'));
-eva = new evaluater();
-console.log(eva.evaluate(data));
-data_2 = JSON.parse(fs.readFileSync('data/twitter_2.json'));
-console.log(eva.evaluate(data_2));

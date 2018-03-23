@@ -10,8 +10,8 @@ const stream = T.stream('statuses/sample');
 const ig = require('instagram-scraper');
 
 // Nueral Network and Natural Language Processor
-const Scorer = require('./scorer');
-const Network = new Scorer();
+const Evaluator = require('./evaluate');
+const eval = new Evaluator();
 
 // Express, Socket.io, Mongojs and FS
 const express = require('express');
@@ -28,6 +28,9 @@ const port = process.env.PORT || 8000;
 const fs = require('fs');
 const csv = require('csv-parser');
 
+
+// data = JSON.parse(fs.readFileSync('data/twitter_2.json'));
+// console.log(eval.evaluate(data));
 
 // Middleware
 app.use(bodyParser.urlencoded({
@@ -60,7 +63,7 @@ io.on('connection', (socket) => {
     });
 });
 stream.on('tweet', tweet => {
-    console.log(tweet.user.screen_name);
+    // console.log(tweet.user.screen_name);
     if ((tweet.lang == 'en' && tweet.user.location == 'Republic of the Philippines ') || tweet.lang == 'tl') {
         if (tweet.user.followers_count > 1000 && tweet.user.followers_count < 10000) {
             T.get('statuses/user_timeline', {
@@ -68,7 +71,8 @@ stream.on('tweet', tweet => {
                 count: 200,
                 include_rts: false
             }, (err, tweets) => {
-
+                console.log(eval.evaluate(tweets));
+                io.emit('tweet', tweet);
             });
         }
     }
@@ -93,8 +97,10 @@ app.get('/twitter', (req, res) => {
         screen_name: user
     }, (err, data) => {
         T.get('statuses/user_timeline', {
-            screen_name: user
+            screen_name: user,
+            count: 200
         }, (err, tweets) => {
+            console.log(eval.evaluate(tweets));
             res.render('twitter_show', {
                 user: data,
                 tweets: tweets
