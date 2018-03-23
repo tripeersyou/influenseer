@@ -18,6 +18,7 @@ const ig_eval = new IgEvaluator();
 
 // Express, Socket.io, Mongojs and FS
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
@@ -29,9 +30,9 @@ const mongojs = require('mongojs');
 const db = mongojs(process.env.db_uri, ['leaderboard']);
 const port = process.env.PORT || 8000;
 const fs = require('fs');
-const csv = require('csv-parser');
-
+const csvtojson = require('csvtojson');
 // Middleware
+app.use(fileUpload());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
@@ -41,7 +42,6 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
 
 app.get('/', (req, res) => {
     stream.stop();
@@ -62,7 +62,6 @@ io.on('connection', (socket) => {
 });
 
 stream.on('tweet', tweet => {
-    console.log('Streaming');
     if ((tweet.lang == 'en' && tweet.user.location == 'Republic of the Philippines ') || tweet.lang == 'tl') {
         if (tweet.user.followers_count > 1000 && tweet.user.followers_count < 10000) {
             T.get('statuses/user_timeline', {
@@ -181,9 +180,20 @@ app.get('/twitter', (req, res) => {
     });
 });
 
-app.get('/facebook', (req, res) => {
+app.post('/facebook', (req, res) => {
     stream.stop();
-    let file = req.query.facebook_data;
+    let file = req.files.facebook_data;
+    let options = {
+        delimiter : ',', 
+        quote     : '"'
+    };
+    file.mv('uploads/data.csv', function(err){ if (err) { console.log(err); }});
+
+    csvtojson().fromFile('uploads/data.csv').on('json',(jsonObj)=>{
+        console.log(jsonObj);
+    }).on('done',(error)=>{
+        
+    });
 });
 
 app.get('/leaderboards', (req, res)=>{
@@ -202,3 +212,5 @@ app.get('/leaderboards', (req, res)=>{
 server.listen(port, () => {
     console.log(`Application is listening at port ${port}: http://localhost:${port}`);
 });
+stream.stop();
+

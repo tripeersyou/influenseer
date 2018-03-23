@@ -37,32 +37,31 @@
         </div>
         <div class="column">
                 <label class="label" id= "nonaction">Facebook</label>
-            <form action="/facebook" method="get">
+            <form action="/facebook" method="post" encType="multipart/form-data">
                 <div class="field">
                     <input type="text" class="input" placeholder="Username" name="username" required>
                 </div>
                 <div class="field">
-                    <input type="file" name="facebook_data" id="facebook_data" class="input" required>
+                    <input type="file" id="facebook_data" name="facebook_data" class="input" >
                 </div>
                 <div class="field">
-                        <div class="file is-link has-name">
-                          <label class="file-label">
-                            <input class="file-input" id="iblue" type="file" name="resume">
-                            <span class="file-cta">
-                              <span class="file-icon">
-                                <i class="fas fa-upload"></i>
-                              </span>
-                              <span class="file-label">
-                                Upload
-                              </span>
+                    <div class="file is-link has-name">
+                        <label class="file-label">
+                        <input class="file-input" id="iblue" type="file">
+                        <span class="file-cta">
+                            <span class="file-icon">
+                            <i class="fas fa-upload"></i>
                             </span>
-                            <span class="file-name">
-                                File name chosen
-                              <!--put shit somewhere-->
+                            <span class="file-label">
+                            Upload
                             </span>
-                          </label>
-                        </div>
-                      </div>
+                        </span>
+                        <span class="file-name">
+
+                        </span>
+                        </label>
+                    </div>
+                </div>
                 <button class="button is-link is-hoverable" id = "search-button">Search</button>
             </form>
         </div>
