@@ -45,7 +45,7 @@
 		console.log(sensitive_content_rate);
 
 
-		for (var i = historical_tweets.length - 1; i >= 0; i--) {
+		for (var i = 175; i <=historical_tweets.length ; i--) {
 			T.get('statuses/retweets/:id', {
 				id: historical_tweets[i].id
 			}).
