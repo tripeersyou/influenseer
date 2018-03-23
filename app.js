@@ -62,6 +62,7 @@ io.on('connection', (socket) => {
 });
 
 stream.on('tweet', tweet => {
+    console.log('Streaming');
     if ((tweet.lang == 'en' && tweet.user.location == 'Republic of the Philippines ') || tweet.lang == 'tl') {
         if (tweet.user.followers_count > 1000 && tweet.user.followers_count < 10000) {
             T.get('statuses/user_timeline', {
@@ -128,7 +129,8 @@ app.get('/instagram', (req, res) => {
                 }
             });
             res.render('ig_show', {
-                data: data
+                data: data,
+                score: results[0]
             });
         } else {
             res.render('404');
@@ -186,7 +188,7 @@ app.get('/facebook', (req, res) => {
 
 app.get('/leaderboards', (req, res)=>{
     stream.stop();
-    db.leaderboard.find((err,docs)=>{
+    db.leaderboard.find().sort({score: -1},(err,docs)=>{
         res.render('leaderboard', {
             influencers: docs
         });

@@ -1,3 +1,34 @@
 <%- include layouts/header %>
-
+<h2 class="subtitle">Leaderboards</h2>
+<a href="/" class="button">Back</a>
+<table class="table">
+    <thead>
+        <tr>
+            <thead>
+                <th>Ranking</th>
+                <th>Platform</th>
+                <th>Username</th>
+                <th>Follower Count</th>
+                <th>Score</th>
+                <th>Viable for Beauty?</th>
+                <th>Viable for Family?</th>
+            </thead>
+        </tr>
+    </thead>
+    <tbody>
+        <% let i = 1; %>
+        <% for(let influencer of influencers) { %>
+            <tr>
+                <td><%- i %></td>
+                <td><%- influencer.platform%></td>
+                <td><%- influencer.screen_name%></td>
+                <td><%- influencer.follower_count %></td>
+                <td><%- Math.round(influencer.score * 100) / 100 %></td>
+                <td><%- influencer.is_beauty%></td>
+                <td><%- influencer.is_family%></td>
+            </tr>
+            <% i++; %>
+        <% } %>
+    </tbody>
+</table>
 <%- include layouts/footer %>
