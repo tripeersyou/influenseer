@@ -28,12 +28,8 @@ function evaluate(tweets, id) {
 		if ((parseInt(historical_tweets[i].favorite_count) > 0) || (parseInt(historical_tweets[i].retweet_count) > 0)) {
 			posts_with_interactions++;
 		}
-<<<<<<< HEAD
-
-=======
 		if (historical_tweets[i].possibly_sensitive) {
 			sensitive_content_posts++;
->>>>>>> e139fcc309f3ffa75784057ece3a7c4cd0757f67
 		}
 	}
 
@@ -50,7 +46,7 @@ function evaluate(tweets, id) {
 
 	for (var i = historical_tweets.length - 1; i >= 0; i--) {
 		T.get('statuses/retweets/:id', {
-			id: historical_tweets[i].id
+			id: historical_tweets[i].id_str
 		}).
 		then(response => {
 			sentiment_grade = 0;
