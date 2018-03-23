@@ -1,8 +1,36 @@
 <%- include layouts/header %>
-    <div class="container">
-        <h1 class="title">influenseer <small>see whos's trending</small></h1>
-        <form action="/stream" method="get">
-            
-        </form>
+    <a href="/stream" class="button">Start Streaming Tweets</a>
+    <a href="/leaderboards" class="button">View the Leaderboard</a>
+    <hr>
+    <div class="columns">
+        <div class="column">
+            <h2 class="subtitle">Instagram</h2>
+            <form action="/instagram" method="get">
+                <div class="field">
+                    <input type="text" class="input" placeholder="username" name="handle">
+                </div>
+            </form>
+        </div>
+        <div class="column">
+            <h2 class="subtitle">Twitter</h2>
+            <form action="/twitter" method="get">
+                <div class="field">
+                    <input type="text" class="input" placeholder="username" name="handle">
+                    
+                </div>
+            </form>       
+        </div>
+        <div class="column">
+            <h2 class="subtitle">Facebook</h2>
+            <form action="/facebook" method="get">
+                <div class="field">
+                    <input type="text" class="input" placeholder="username" name="username" required>
+                </div>
+                <div class="field">
+                    <input type="file" name="facebook_data" id="facebook_data" class="input" required>
+                </div>
+                <button class="button" type="submit">Submit</button>
+            </form>
+        </div>
     </div>
 <%- include layouts/footer %>

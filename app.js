@@ -26,6 +26,7 @@ const mongojs = require('mongojs');
 const db = mongojs(process.env.db_uri, ['leaderboard']);
 const port = process.env.PORT || 8000;
 const fs = require('fs');
+const csv = require('csv-parser');
 
 
 // Middleware
@@ -42,7 +43,7 @@ app.set('view engine', 'ejs');
 
 stream.stop();
 
-app.get('/', (req, res)=>{
+app.get('/', (req, res) => {
     res.render('index');
 });
 
@@ -59,29 +60,53 @@ io.on('connection', (socket) => {
     });
 });
 stream.on('tweet', tweet => {
+    console.log(tweet.user.screen_name);
     if ((tweet.lang == 'en' && tweet.user.location == 'Republic of the Philippines ') || tweet.lang == 'tl') {
         if (tweet.user.followers_count > 1000 && tweet.user.followers_count < 10000) {
-            T.get('statuses/user_timeline', {screen_name: tweet.user.screen_name,count: 200,include_rts: false}, (err, tweets) => {
-               
+            T.get('statuses/user_timeline', {
+                screen_name: tweet.user.screen_name,
+                count: 200,
+                include_rts: false
+            }, (err, tweets) => {
+
             });
         }
     }
 });
 
-app.get('/instagram', (req, res)=>{
-    
-});
-
-app.get('/instagram/:handle', (req, res) => {
+app.get('/instagram', (req, res) => {
     stream.stop();
-	let user = req.params.handle;
-	ig.getUserData(user).then(data => {
-        res.render('ig_show',{data: data});
- 	}).catch(data =>{
-         res.render('404');
-     });
+    let user = req.query.handle;
+    ig.getUserData(user).then(data => {
+        res.render('ig_show', {
+            data: data
+        });
+    }).catch(data => {
+        res.render('404');
+    });
 });
 
+app.get('/twitter', (req, res) => {
+    stream.stop();
+    let user = req.query.handle;
+    T.get('users/show', {
+        screen_name: user
+    }, (err, data) => {
+        T.get('statuses/user_timeline', {
+            screen_name: user
+        }, (err, tweets) => {
+            res.render('twitter_show', {
+                user: data,
+                tweets: tweets
+            });
+        });
+    });
+});
+
+app.get('/facebook', (req, res) => {
+    stream.stop();
+    let file = req.query.facebook_data;
+});
 
 // app.get('*', (req, res) => {
 //     res.render('404');
