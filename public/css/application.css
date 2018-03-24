@@ -65,3 +65,12 @@ body {
     margin-right: 50px;
     margin-left: 10px;
 }
+#sad {
+    color: gold;
+}
+#okay {
+    color: greenyellow;
+}
+#yey {
+    color: forestgreen;
+}
