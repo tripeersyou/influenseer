@@ -60,6 +60,7 @@
                       </div>
         </div>
       </nav>
+<div class="card">
 <table class="table" style="width:100%;">
     <thead>
         <tr>
@@ -79,15 +80,30 @@
         <% for(let influencer of influencers) { %>
             <tr>
                 <td><%- i %></td>
-                <td><%- influencer.platform%></td>
+                <td><%- influencer.platform.charAt(0).toUpperCase() + influencer.platform.substr(1)%></td>
                 <td><%- influencer.screen_name%></td>
                 <td><%- influencer.follower_count %></td>
-                <td><%- ((influencer.score) * 100).toFixed(2) + '%' %></td>
-                <td><%- influencer.is_beauty%></td>
-                <td><%- influencer.is_family%></td>
+                <td><% if(influencer.score * 100 <= 33) { %>
+						<span id = "sad"><%- ((influencer.score) * 100).toFixed(2) + '%' %></span>
+					<% } else if (influencer.score * 100 <= 60){ %>
+						<span id = "okay"><%- ((influencer.score) * 100).toFixed(2) + '%' %></span>
+					<% } else { %>
+						<span id = "yey"><%- ((influencer.score) * 100).toFixed(2) + '%' %></span>
+					<% } %></td>
+                <td><% if (influencer.is_beauty == true) { %>
+                    <span class="tag is-success is-medium">True</span>
+                    <% } else { %>
+                        <span class="tag is-danger is-medium">False</span>
+                    <% } %></td>
+                <td><% if (influencer.is_family == true) { %>
+                    <span class="tag is-success is-medium">True</span>
+                    <% } else { %>
+                        <span class="tag is-danger is-medium">False</span>
+                    <% } %></td>
             </tr>
             <% i++; %>
         <% } %>
     </tbody>
 </table>
+</div>
 <%- include layouts/footer %>
