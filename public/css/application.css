@@ -23,12 +23,14 @@ body {
     padding-top: 15px;
     background-color: #F7FAFF;
 }
+#logo {
+    margin-left: -15px;
+}
 .influenseer-button {
     padding: 23px 20px 23px 20px;
 }
 #iblue {
     background-color: #1875F0;
-    padding: 23px 20px 23px 20px;
 }
 #nonaction {
     color: grey;
@@ -44,4 +46,10 @@ body {
 }
 .main_test{
     font-size: 20px;
+}
+#submit-button {
+    padding-bottom: 35px;
+    padding-top: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
 }
