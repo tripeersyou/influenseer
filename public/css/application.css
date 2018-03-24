@@ -31,6 +31,7 @@ body {
 }
 #iblue {
     background-color: #1875F0;
+    padding: 23px 20px 23px 20px;
 }
 #nonaction {
     color: grey;
@@ -39,6 +40,7 @@ body {
 }
 #phrase {
     color: dimgrey;
+    padding-top: 7px;
 }
 .subtext{
     font-size: 0.76em;
@@ -52,4 +54,10 @@ body {
     padding-top: 10px;
     padding-left: 25px;
     padding-right: 25px;
+}
+#ibluefont {
+    color: #1875F0;
+}
+#platform-drop {
+    margin-right: 15px;
 }
