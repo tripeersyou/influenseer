@@ -229,7 +229,7 @@ app.post('/facebook', (req, res, next) => {
                 }, entity, (err, res) => {});
             }
         });
-        res.render('facebook_show', {posts: posts, score: result[0], username: req.body.username});
+        res.render('facebook_show', {posts: posts, score: result[0], username: req.body.username,follower_count: posts[0].follower_count});
     });
 });
 

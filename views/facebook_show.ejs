@@ -14,12 +14,39 @@
 <a class="button is-primary"id="iblue" href='/' style="position: fixed; top: 80%; right:5%; height: 60px; width: 60px; border-radius:50%; z-index:999">
 	<
 </a>
+<<<<<<< HEAD
 <h2 class="title is-2">Facebook</h2>
 <h2 class="subtitle">User profile: <a href="https://facebook.com/<%- username %>" ><%- username %></a></h2>
+=======
+
+<div class='columns'>
+    <div class='column' style="position:relative">
+        <div style="position:absolute; top:50%; right:50%"> 
+            <span class='subtext'>User Profile</span>
+            <br/>
+            <span class='main_text'><a href="https://facebook.com/<%- username %>" ><%- username %></a></span>
+        </div>
+    </div>
+    <div class='column' style="position:relative">
+        <div style="position:absolute; top:50%; right:50%"> 
+            <span class='subtext'>Followers</span>
+            <br/>
+            <span class='main_text'><%- follower_count %></span>
+        </div>
+    </div>
+    <div class='column' style="position:relative">
+        <div style="position:absolute; top:50%; right:50%"> 
+            <span class='subtext'>Score</span>
+            <br/>
+            <%- (score * 100).toFixed(2) + '%' %>
+        </div>
+    </div>
+</div>
+>>>>>>> ef4be765f558381506f536ec76fce9575e69bae2
 <br>
- <p class="subtitle">
-    Score: <%- (score * 100).toFixed(2) + '%' %>
- </p>
+<hr>
+
+
  <div class="columns is-multiline"> 
  <% for(let post of posts) {%>
     <div class="column is-one-third">
@@ -32,8 +59,10 @@
             <footer class="card-footer">
                 <p class="card-footer-item">Likes: <%- post.like_count %></p>
                 <p class="card-footer-item">Angry: <%- post.angry_count %></p>
-                <p class="card-footer-item">Happy: <%- post.happy_count %></p>
+                <p class="card-footer-item">Wow: <%- post.happy_count %></p>
                 <p class="card-footer-item">Laughs: <%- post.laughing_count %></p>
+                <p class="card-footer-item">:Love: <%- post.love_count %></p>
+                <p class="card-footer-item">Laughs: <%- post.sad_count %></p>
             </footer>
         </div>
     </div>
