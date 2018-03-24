@@ -154,34 +154,38 @@ app.get('/twitter', (req, res) => {
             screen_name: user,
             count: 200
         }, (err, tweets) => {
-            let results = eval.evaluate(tweets);
-            console.log(results)
-            let entity = {
-                platform: 'twitter',
-                screen_name: user,
-                follower_count: data.followers_count,
-                score: results[0],
-                is_beauty: results[1],
-                is_family: results[2]
-            };
-            db.leaderboard.find({
-                platform: 'twitter',
-                screen_name: user
-            }, (err, docs) => {
-                if (docs.length == 0) {
-                    db.leaderboard.insert(entity, (err, res) => {});
-                } else {
-                    db.leaderboard.update({
-                        platform: 'twitter',
-                        screen_name: user
-                    }, entity, (err, res) => {});
-                }
-            });
-            res.render('twitter_show', {
-                user: data,
-                tweets: tweets,
-                score: results[0]
-            });
+            if (tweets.error) {
+                res.render('404');
+            } else {
+                let results = eval.evaluate(tweets);
+                console.log(results)
+                let entity = {
+                    platform: 'twitter',
+                    screen_name: user,
+                    follower_count: data.followers_count,
+                    score: results[0],
+                    is_beauty: results[1],
+                    is_family: results[2]
+                };
+                db.leaderboard.find({
+                    platform: 'twitter',
+                    screen_name: user
+                }, (err, docs) => {
+                    if (docs.length == 0) {
+                        db.leaderboard.insert(entity, (err, res) => {});
+                    } else {
+                        db.leaderboard.update({
+                            platform: 'twitter',
+                            screen_name: user
+                        }, entity, (err, res) => {});
+                    }
+                });
+                res.render('twitter_show', {
+                    user: data,
+                    tweets: tweets,
+                    score: results[0]
+                });
+            }
         });
     });
 });
