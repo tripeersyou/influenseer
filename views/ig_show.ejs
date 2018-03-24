@@ -14,8 +14,40 @@
 <a class="button is-primary" id="iblue" href='/' style="position: fixed; top: 80%; right:5%; height: 60px; width: 60px; border-radius:50%; z-index:999">
 	<
 </a>
-
-<div class='columns'>
+<nav class="level">
+	<div class = "level-left">
+		<div class="level-item has-text-centered">
+		  <div>
+			<img src="<%- data.graphql.user.profile_pic_url %>" alt="" style="border-radius:50%"/>
+		  </div>
+		</div>
+	</div>
+		<div class="level-item has-text-left">
+		  <div>
+			<p class="heading">Name</p>
+			<p class="title is-4"><%- data.graphql.user.full_name %></p>
+		  </div>
+		</div>
+		<div class="level-item has-text-left">
+		  <div>
+			<p class="heading">Username</p>
+			<p class="title is-4"><%- data.graphql.user.username %></p>
+		  </div>
+		</div>
+		<div class="level-item has-text-left">
+		  <div>
+			<p class="heading">Followers</p>
+			<p class="title is-3"><%- data.graphql.user.edge_followed_by.count %></p>
+		  </div>
+		</div>
+		<div class="level-item has-text-left">
+			<div>
+				<p class="heading">Score</p>
+				<p class="title is-3" id="ibluefont"><%- ((score) * 100).toFixed(2) + '%' %></p>
+			</div>
+		</div>
+	  </nav>
+<!--div class='columns'>
 	<div class='column'>
 		<br>
 		<img src="<%- data.graphql.user.profile_pic_url %>" alt="" style="border-radius:50%"/>
@@ -48,8 +80,8 @@
 			<span class='main_text'><%- ((score) * 100).toFixed(2) + '%' %></span>
 		</div>
 	</div>
-</div>
-<hr>
+</div-->
+
 
 
 <div class="columns is-multiline is-mobile">

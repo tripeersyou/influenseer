@@ -16,34 +16,42 @@
 </a>
 <div class="card">
     <div class="card-content">
-        <div class="media">
-            <div class="media-left">
-                <figure class="image is-48x48">
-                <a href="https://twitter.com/<%- user.screen_name %>">
-                    <img src="<%- user.profile_image_url_https %>">                    
-                </a>
-                </figure>
-            </div>
-            <div class="media-content" style="overflow:hidden;">
-                <p class="title is-4"><%-user.name %></p>
-                <p class="subtitle is-6">@<%- user.screen_name %></p>
-            </div>
-            <div class="columns">
-                <div class="column">
-                    <p class="title is-6">Followers Count:</p>
-                    <%- user.followers_count %>    
-                </div>
-                <div class="column">
-                <p class="title is-6">Statuses Count:</p>
-                    <%- user.statuses_count %>    
-                </div>
-                <div class="column">
-                    <p class="title is-6">Score:</p>
-                    <%- ((score) * 100).toFixed(2) + '%' %>    
-                </div>
+            <nav class="level">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-48x48">
+                            <a href="https://twitter.com/<%- user.screen_name %>">
+                                <img src="<%- user.profile_image_url_https %>">                    
+                            </a>
+                            </figure>
+                        </div>
+                        <div class="media-content" style="overflow:hidden;">
+                            <p class="title is-4"><%-user.name %></p>
+                            <p class="subtitle is-6">@<%- user.screen_name %></p>
+                        </div>
+                    </div>
+                    <div class = "level-right">
+                        <div class="level-item has-text-centered" id = "profile-space">
+                          <div>
+                            <p class="heading">Followers</p>
+                            <p class="title is-4"><%- user.followers_count %></p>
+                          </div>
+                        </div>
+                        <div class="level-item has-text-centered"id = "profile-space">
+                          <div>
+                            <p class="heading">Tweets</p>
+                            <p class="title is-4"><%- user.statuses_count %></p>
+                          </div>
+                        </div>
+                        <div class="level-item has-text-centered" id = "profile-space">
+                            <div>
+                                <p class="heading">Score</p>
+                                <p class="title is-3" id="ibluefont"><%- ((score) * 100).toFixed(2) + '%' %>  </p>
+                            </div>
             </div>
         </div>
-    </div>
+    </nav>
+</div>
 </div>
 <br>
 <div class="columns is-multiline">
