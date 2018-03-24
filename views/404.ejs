@@ -1,4 +1,17 @@
 <%- include layouts/header %>
-    <h1>Error 404: Page not found</h1>
-    <a href="/">Back</a>
+<a class="navbar-item" href="/">
+    <img src="img/influenseer.png" id = "logo" alt="Influenseer" width="200" height="63">
+</a>      
+    <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="field is-grouped">
+            <a class="navbar-item" id = "nonaction" href="/leaderboards">Leaderboard</a>
+            <a href="/stream" class="button is-link is-hoverable" id = "iblue">Stream</a>
+          </div>
+        </div>
+      </div>
+</nav>
+<br>
+    <h1 class = "title is-1" id = "phrase">Error 404: Page not found</h1>
+    <a href="/" class="button is-link is-hoverable" id = "iblue">Back</a>
 <%- include layouts/footer %>

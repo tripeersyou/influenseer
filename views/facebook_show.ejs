@@ -1,8 +1,20 @@
 <%- include layouts/header %>
-<a class="button is-primary" href='/' style="position: fixed; top: 80%; right:5%; height: 60px; width: 60px; border-radius:50%; z-index:999">
+<a class="navbar-item" href="/">
+    <img src="img/influenseer.png" id = "logo" alt="Influenseer" width="200" height="63">
+</a>      
+    <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="field is-grouped">
+            <a class="navbar-item" id = "nonaction" href="/leaderboards">Leaderboard</a>
+            <a href="/stream" class="button is-link is-hoverable" id = "iblue">Stream</a>
+          </div>
+        </div>
+      </div>
+</nav>
+<a class="button is-primary"id="iblue" href='/' style="position: fixed; top: 80%; right:5%; height: 60px; width: 60px; border-radius:50%; z-index:999">
 	<
 </a>
-<h1 class="title">Facebook</h1>
+<h2 class="title is-2">Facebook</h2>
 <h2 class="subtitle">User profile: <a href="https://facebook.com/<%- username %>" ><%- username %></a></h2>
 <br>
  <p class="subtitle">
