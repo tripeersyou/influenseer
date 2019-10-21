@@ -23,7 +23,7 @@
     "express": "^4.16.2",
     "express-fileupload": "^0.4.0",
     "instagram-scraper": "^1.0.6",
-    "mongojs": "^2.4.1",
+    "mongojs": "^3.0.0",
     "natural": "^0.5.6",
     "socket.io": "^2.0.4",
     "speakeasy-nlp": "^0.2.12",
