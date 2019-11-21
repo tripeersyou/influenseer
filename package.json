@@ -21,7 +21,7 @@
     "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
-    "express-fileupload": "^0.4.0",
+    "express-fileupload": "^1.1.6",
     "instagram-scraper": "^1.0.6",
     "mongojs": "^2.4.1",
     "natural": "^0.5.6",
