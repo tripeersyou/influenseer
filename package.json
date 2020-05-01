@@ -6,7 +6,9 @@
   "repository": "http://github.com/tripeersyou/influenseer",
   "scripts": {
     "start": "node app",
-    "test": "echo \"Error: no test specified.\""
+    "test": "echo \"Error: no test specified.\"",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "authors": [
     "Francis Avanceña",
@@ -28,9 +30,11 @@
     "socket.io": "^2.0.4",
     "speakeasy-nlp": "^0.2.12",
     "synaptic": "^1.1.4",
-    "twit": "^2.2.9"
+    "twit": "^2.2.9",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "nodemon": "^1.17.1"
-  }
+  },
+  "snyk": true
 }
