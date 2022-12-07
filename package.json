@@ -20,7 +20,7 @@
     "csvtojson": "^1.1.9",
     "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
-    "express": "^4.16.2",
+    "express": "^4.17.3",
     "express-fileupload": "^0.4.0",
     "instagram-scraper": "^1.0.6",
     "mongojs": "^2.4.1",
